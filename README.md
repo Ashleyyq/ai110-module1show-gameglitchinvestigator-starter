@@ -25,13 +25,25 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- [x] **Game purpose:** A number guessing game where the player picks a difficulty, gets a limited number of attempts to guess a secret number, and receives hints after each guess. The goal is to guess correctly before running out of attempts.
+
+- [x] **Bugs found:**
+  1. The "New Game" button did not actually start a new game — clicking it left the game in a won/lost state and blocked any new guesses.
+  2. When hints were turned off, there was no feedback after each guess — the player had no idea how many attempts they had used until the very last one.
+  3. The difficulty range was ignored — Easy mode was supposed to use 1–20 but the secret could be as high as 90.
+  4. The hints were misleading — "Go HIGHER" meant the guess was too low, which felt backwards to read.
+  5. The `logic_utils.py` functions were never implemented — all four stubs raised `NotImplementedError`, so the game only worked because the same functions were still defined in `app.py`.
+
+- [x] **Fixes applied:**
+  1. Fixed the New Game button by resetting `status` back to `"playing"`, clearing `history`, and generating the new secret using `get_range_for_difficulty(difficulty)`.
+  2. Fixed the hints-off feedback by always showing an attempt count message after every non-winning guess, regardless of the hint setting.
+  3. Implemented all four function stubs in `logic_utils.py` (`get_range_for_difficulty`, `parse_guess`, `check_guess`, `update_score`) and removed the duplicate definitions from `app.py`.
+  4. Added two more helper functions to `logic_utils.py`: `get_attempt_limit_for_difficulty` (replacing the hardcoded attempt map in `app.py`) and `get_effective_secret` (encapsulating the intentional glitch behavior where the secret type switches on even attempts).
+  5. Fixed the three original broken test assertions in `test_game_logic.py` that compared `check_guess` output to a plain string instead of unpacking the returned tuple.
 
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
+- [x] ![Winning game screenshot](screenshot_winning_game.png)
 
 ## 🚀 Stretch Features
 

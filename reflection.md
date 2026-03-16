@@ -44,6 +44,7 @@ Yes, Claude Code helped me write new pytest cases that specifically targeted the
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+Every time you click a button in a Streamlit app, the whole Python script runs again from the top. So any normal variable you set will get reset back to its default on every click. That's why the secret number kept changing every time I submitted a guess. Session state is like a dictionary that Streamlit keeps alive between those reruns, so things like the secret number and the attempt count don't disappear. The New Game bug happened because we forgot to reset the status in session state, so the game just blocked itself on every rerun even after clicking New Game.
 
 ---
 
@@ -51,5 +52,10 @@ Yes, Claude Code helped me write new pytest cases that specifically targeted the
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+Running pytest before and after making changes is something I want to keep doing. In this project it caught the broken starter tests that I would have missed on my own. And having the new bug-targeted tests made me more confident that my fixes actually worked and did not break anything else.
+
 - What is one thing you would do differently next time you work with AI on a coding task?
+I would check the actual requirements before applying an AI suggestion instead of after. In this project I let Claude Code move extra functions into logic_utils.py before I compared with the original spec. If I had read the requirements first and then asked AI to help within those limits, I would not have needed to undo part of the work.
+
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+I used to think AI-generated code was mostly correct and just needed small tweaks. But this project showed me that AI can write code that runs fine but still has real logic bugs, so now I think of it more like a fast first draft that I still need to read carefully and test before trusting it.
